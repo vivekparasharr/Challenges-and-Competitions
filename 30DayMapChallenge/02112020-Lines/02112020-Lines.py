@@ -66,7 +66,7 @@ vp_annotate(86,20.5,'Mahanadi (851 Km)', 'br')
 vp_annotate(78.5,9.5,'Kaveri (800 Km)', 'tr')
 vp_annotate(77,21,'Tapi (724 Km)', 'tr')
 plt.text(85, 6, '#30DayMapChallenge - Day 2 - Lines \nhttps://twitter.com/vivekparasharr/ \nData from DIVA-GIS', fontsize=20)
-fig.savefig('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/day2-major-rivers.png')
+# fig.savefig('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/day2-major-rivers.png')
 
 # Plot India map and River map on the same axis
 fig, ax = plt.subplots(figsize=(17,20))

@@ -1,6 +1,6 @@
 
-import pandas as pd 
-import matplotlib.pyplot as plt 
+import pandas as pd
+import matplotlib.pyplot as plt
 import descartes
 import geopandas as gpd
 from shapely.geometry import Point, Polygon
@@ -60,4 +60,3 @@ ax.annotate('Atlantic \nOcean', (-50, 25), fontsize=20, color='maroon')
 ax.annotate('Indian \nOcean', (72, -15), fontsize=20, color='maroon')
 ax.annotate('Southern \nOcean', (-9, -60), fontsize=20, color='maroon')
 ax.annotate('Arctic \nOcean', (-9, 72), fontsize=20, color='maroon')
-
