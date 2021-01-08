@@ -50,3 +50,29 @@ df2[df2.name.isin(['Chile', 'Brazil', 'Peru', 'Argentina', 'Mexico', 'Uruguay'])
     .pivot(index='date', columns='name', values='dollar_price')\
     .plot(legend='best')
 
+
+# New approach
+
+def cagr(first, last, periods):
+    return (last/first)**(1/periods)-1
+
+df3 = df.groupby(['name', 'date']).mean()[['dollar_price']].reset_index()
+df3_pivoted = df3.pivot(index='date', columns='name', values='dollar_price')
+df3_pivoted.dropna(axis=1)
+df3.pivoted.fillna()
+
+# Taking care of missing data
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+imputer.fit(X[:, 1:3])
+X[:, 1:3] = imputer.transform(X[:, 1:3])
+print(X)
+
+
+df3[df3.name=='India']
+
+df3[df3.name=='India'].reset_index().apply()
+
+df3[df3.name=='India'].set_index('date').plot()
+
+
