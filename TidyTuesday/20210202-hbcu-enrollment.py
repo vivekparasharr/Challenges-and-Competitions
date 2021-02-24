@@ -67,23 +67,59 @@ alt.Chart(source).mark_line().encode(
 import plotly.express as px
 
 df = px.data.gapminder().query("continent=='Oceania'")
-fig = px.line(df1, x="Year", y="Pop", color='Race')
+
+color_list = ['dimgray', 'firebrick', 'olive', 'saddlebrown', 'steelblue', 'seagreen', 'darkviolet', 'crimson']
+
+fig = px.line(df1, x="Year", y="Pop", color='Race') # color='Race'
 annotations=[]
-annotations.append(dict(xref='paper', x=0.05, y=13.5,
-                                  xanchor='right', yanchor='middle',
-                                  text='Total' + ' {}%'.format(13.5),
-                                  font=dict(family='Arial',
-                                            size=16),
-                                  showarrow=False))
+for yr,pop,race in zip(year_list,pop_list, race_list):
+    annotations.append(dict(xref='paper', x=(yr-1910)/100, y=pop,
+                                    xanchor='right', yanchor='middle',
+                                    text=race + ' {}%'.format(13.5),
+                                    font=dict(family='Arial',
+                                                size=16,color='black'),
+                                    showarrow=False))
 fig.update_layout(annotations=annotations)
+fig.update_layout(
+    autosize=False,
+    width=1200,
+    height=1600)
 fig.show()
 
 pd.to_numeric(df1['Pop'])
 
+pd.to_numeric(df1.Pop)
+
+import re
+df1.applymap(lambda x: re.sub(r'^-$', str(np.NaN), x))
+df1.replace("-", "")[df1.Race=='MixRace']
+df1[df1.columns.drop(['Pop'])].replace('-', np.nan)[df1.Race=='MixRace']
+
+df11 = df1.fillna(value=np.nan)
+df11.Pop = 
+
+
+
+df1.Pop = pd.to_numeric(df1.Pop, errors='coerce').fillna(0).astype(int) # working
+df1['rank_race'] = df1[df1.Pop>0].groupby('Race')['Year'].rank(method='first') # window funciton
+df1[df1['rank_race']==1]
+
+race_list = df1[df1['rank_race']==1].Race.to_list()
+year_list = df1[df1['rank_race']==1].Year.to_list()
+pop_list = df1[df1['rank_race']==1].Pop.to_list()
+
+for yr in year_list:
+    print((yr-1910)/100)
+
+df11[df11.Race=='MixRace']
+
+df11[df11.Pop ==r"/-"]
+
+df11 = df1.replace({'-': None})
+
+df1.fillna(0)[df1.Race=='MixRace']
 df1 = df1[df1['Pop'].notnull()]
 df1 = df1.replace({ "-": np.nan, "&": np.nan })
-df1['rank_race'] = df1.groupby('Race')['Year'].rank(method='first')
-df1[df1['rank_race']==1]
 
 df1[df1.Race=='MixRace']
 '''
