@@ -99,7 +99,7 @@ df11 = df1.fillna(value=np.nan)
 df11.Pop = 
 
 
-
+# Window function on a dataframe 
 df1.Pop = pd.to_numeric(df1.Pop, errors='coerce').fillna(0).astype(int) # working
 df1['rank_race'] = df1[df1.Pop>0].groupby('Race')['Year'].rank(method='first') # window funciton
 df1[df1['rank_race']==1]
