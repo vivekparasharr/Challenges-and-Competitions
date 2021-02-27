@@ -5,6 +5,11 @@ import numpy as np
 employed = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv')
 earn = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv')
 
+df=employed
+df['employed_pct']=round(df.employ_n/df.industry_total,2)
+df.pivot(index='year',columns=['industry','major_occupation','minor_occupation','race_gender'],values='employed_pct')
+
+df.pivot(index='year',columns='industry',values='employed_pct')
 
 ####################### parallel categories plot ###########################
 
