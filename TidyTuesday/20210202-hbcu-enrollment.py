@@ -37,67 +37,9 @@ df1.columns=['Year', 'Pop_Total', 'Pop_White', 'Pop_Black', 'Pop_Hispanic', 'Pop
 df1 = pd.wide_to_long(df1, stubnames='Pop', i=['Year'], j='Race', sep='_', suffix=r'\w+')
 df1 = df1.reset_index()
 
-import altair as alt
 
-alt.Chart(df1).mark_line().encode(
-    x='Year',
-    y='Pop',
-    color='Race',
-)
 
-df1.Race.unique()
-
-line = alt.Chart(df1).mark_line().encode(
-    x='Year',
-    y='mean(Total pop)'
-)
-
-import altair as alt
-from vega_datasets import data
-
-source = data.stocks()
-
-alt.Chart(source).mark_line().encode(
-    x='date',
-    y='price',
-    color='symbol',
-    strokeDash='symbol',
-)
-
-import plotly.express as px
-
-df = px.data.gapminder().query("continent=='Oceania'")
-
-color_list = ['dimgray', 'firebrick', 'olive', 'saddlebrown', 'steelblue', 'seagreen', 'darkviolet', 'crimson']
-
-fig = px.line(df1, x="Year", y="Pop", color='Race') # color='Race'
-annotations=[]
-for yr,pop,race in zip(year_list,pop_list, race_list):
-    annotations.append(dict(xref='paper', x=(yr-1910)/100, y=pop,
-                                    xanchor='right', yanchor='middle',
-                                    text=race + ' {}%'.format(13.5),
-                                    font=dict(family='Arial',
-                                                size=16,color='black'),
-                                    showarrow=False))
-fig.update_layout(annotations=annotations)
-fig.update_layout(
-    autosize=False,
-    width=1200,
-    height=1600)
-fig.show()
-
-pd.to_numeric(df1['Pop'])
-
-pd.to_numeric(df1.Pop)
-
-import re
-df1.applymap(lambda x: re.sub(r'^-$', str(np.NaN), x))
-df1.replace("-", "")[df1.Race=='MixRace']
-df1[df1.columns.drop(['Pop'])].replace('-', np.nan)[df1.Race=='MixRace']
-
-df11 = df1.fillna(value=np.nan)
-df11.Pop = 
-
+df2=df1.copy()
 
 # Window function on a dataframe 
 df1.Pop = pd.to_numeric(df1.Pop, errors='coerce').fillna(0).astype(int) # working
@@ -109,19 +51,39 @@ year_list = df1[df1['rank_race']==1].Year.to_list()
 pop_list = df1[df1['rank_race']==1].Pop.to_list()
 
 for yr in year_list:
-    print((yr-1910)/100)
+    print(round((yr-1910)/100,1))
 
-df11[df11.Race=='MixRace']
 
-df11[df11.Pop ==r"/-"]
+import plotly.express as px
 
-df11 = df1.replace({'-': None})
+# color_list = ['dimgray', 'firebrick', 'olive', 'saddlebrown', 'steelblue', 'seagreen', 'darkviolet', 'crimson']
 
-df1.fillna(0)[df1.Race=='MixRace']
-df1 = df1[df1['Pop'].notnull()]
-df1 = df1.replace({ "-": np.nan, "&": np.nan })
+fig = px.line(df2, x="Year", y="Pop", color='Race') # color='Race'
+annotations=[]
+for yr,pop,race in zip(year_list,pop_list, race_list):
+    annotations.append(dict(xref='paper', x=round((yr-1910)/100,1), y=pop,
+                                    xanchor='right', yanchor='middle',
+                                    text=race + ' {}%'.format(13.5),
+                                    font=dict(family='Arial',
+                                                size=12,color='black'),
+                                    showarrow=False))
+fig.update_layout(annotations=annotations)
+fig.update_layout(
+    autosize=False,
+    width=950,
+    height=1100,
+    showlegend=False,
+    #legend_title="Legend Title",
+    title="High school completion among persons age 25 and over",
+    xaxis_title="Year",
+    yaxis_title="Percent of population (persons age 25 and over)",
+    )
+#fig.write_image("2021-02-02/fig1.png")
+fig.show()
 
-df1[df1.Race=='MixRace']
+
+# df1 = df1.replace({ "-": np.nan, "&": np.nan })
+
 '''
 # wide to long format
 df = pd.DataFrame({
