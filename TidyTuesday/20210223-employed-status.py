@@ -5,43 +5,79 @@ import numpy as np
 employed = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv')
 earn = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv')
 
-df=employed
-df['employed_pct']=round(df.employ_n/df.industry_total,2)
-df.pivot(index='year',columns=['industry','major_occupation','minor_occupation','race_gender'],values='employed_pct')
 
 df.pivot(index='year',columns='industry',values='employed_pct')
 
-####################### parallel categories plot ###########################
+employed.columns
+df=employed[['industry', 'major_occupation', 'minor_occupation', 'race_gender', 'employed_pct']]
+px.parallel_categories(employed)
+
 
 import plotly.express as px
-fig = px.parallel_categories(employed, 
-#    color="lifetime_earn", color_continuous_scale=px.colors.sequential.Inferno,
-#    labels={'gender':'Gender', 'race':'Race', 'lifetime_earn':'Lifetime Earnings (US$)'}
-)
-fig.update_layout(
-    #autosize=False,
-    #width=950,
-    #height=1100,
-    #showlegend=False,
-    #legend_title="Legend Title",
-    title="Average lifetime earning by race/gender",
-    #title_text='Your title', 
-    title_x=0.5,
-    #xaxis_title="Year",
-    #yaxis_title="Percent of population (persons age 25 and over)",
-    )
-fig.update(
-    #layout_showlegend=False,
-    layout_coloraxis_showscale=False,
-    )
-annotations=[]
-annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.1,
-                        xanchor='center', yanchor='top',
-                        text='#TidyTuesday - 2021/02/09 | twitter.com/vivekparasharr | github.com/vivekparasharr | vivekparasharr.medium.com/',
-                        font=dict(family='Arial', size=12, color='grey'),
-                        showarrow=False))
-fig.update_layout(annotations=annotations)
+df = px.data.tips()
+fig = px.box(df, x="race_gender", y="employed_pct")
 fig.show()
+
+
+
+############################################################################
+
+import plotly.graph_objects as go
+
+country = ['Switzerland (2011)', 'Chile (2013)', 'Japan (2014)',
+           'United States (2012)', 'Slovenia (2014)', 'Canada (2011)',
+           'Poland (2010)', 'Estonia (2015)', 'Luxembourg (2013)', 'Portugal (2011)']
+voting_pop = [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6]
+reg_voters = [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=voting_pop,
+    y=country,
+    name='Percent of estimated voting age population',
+    marker=dict(
+        color='rgba(156, 165, 196, 0.95)',
+        line_color='rgba(156, 165, 196, 1.0)',
+    )
+))
+fig.add_trace(go.Scatter(
+    x=reg_voters, y=country,
+    name='Percent of estimated registered voters',
+    marker=dict(
+        color='rgba(204, 204, 204, 0.95)',
+        line_color='rgba(217, 217, 217, 1.0)'
+    )
+))
+
+fig.update_traces(mode='markers', marker=dict(line_width=1, symbol='circle', size=16))
+
+fig.update_layout(
+    title="Votes cast for ten lowest voting age population in OECD countries",
+    xaxis=dict(
+        showgrid=False,
+        showline=True,
+        linecolor='rgb(102, 102, 102)',
+        tickfont_color='rgb(102, 102, 102)',
+        showticklabels=True,
+        dtick=10,
+        ticks='outside',
+        tickcolor='rgb(102, 102, 102)',
+    ),
+    margin=dict(l=140, r=40, b=50, t=80),
+    legend=dict(
+        font_size=10,
+        yanchor='middle',
+        xanchor='right',
+    ),
+    width=800,
+    height=600,
+    paper_bgcolor='white',
+    plot_bgcolor='white',
+    hovermode='closest',
+)
+fig.show()
+
 
 ####################### customized line plot function ###########################
 
@@ -57,7 +93,7 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     x_data = np.vstack((x_axis_labels,)*y_axis_levels) 
     y_data=[]
     for i in range(0, y_axis_levels):
-        y_data.append(df[df[y_axis_field]==y_axis_labels[i]].loan_debt_pct.values.tolist())
+        y_data.append(df[df[y_axis_field]==y_axis_labels[i]][value_field].values.tolist())
     y_data = np.array(y_data)
     # select colors to be used and line thickness of plot
     colors = ['firebrick','olive','dodgerblue','blueviolet','dimgrey','tomato','sienna','darkorange','forestgreen','steelblue','royalblue','orchid']
@@ -69,7 +105,7 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     # Add lines to plot
     for i in range(0, y_axis_levels):
         fig.add_trace(go.Scatter(x=x_data[i], y=y_data[i], mode='lines',
-            name=labels[i],
+            name=y_axis_labels[i],
             line=dict(color=colors[i], width=line_size[i]),
             connectgaps=True,
         ))
@@ -95,7 +131,7 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     # Annotate
     annotations = []
     # Adding labels
-    for y_trace, label, color in zip(y_data, labels, colors):
+    for y_trace, label, color in zip(y_data, y_axis_labels, colors):
         # labeling the left_side of the plot
         annotations.append(dict(xref='paper', x=0.05, y=y_trace[0],
                                     xanchor='right', yanchor='middle',
@@ -103,9 +139,9 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
                                     font=dict(family='Arial', size=12),
                                     showarrow=False))
         # labeling the right_side of the plot
-        annotations.append(dict(xref='paper', x=0.95, y=y_trace[9],
+        annotations.append(dict(xref='paper', x=0.95, y=y_trace[y_data.size-1],#change
                                     xanchor='left', yanchor='middle',
-                                    text='{}%'.format(y_trace[9]),
+                                    text='{}%'.format(y_trace[y_data.size-1]),
                                     font=dict(family='Arial', size=12),
                                     showarrow=False))
     # Footnote
@@ -120,14 +156,16 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     # End of vp_line_plot plotting function
 
 # round the y data value 
-student_debt.loan_debt_pct = student_debt.loan_debt_pct.round(2)
+employed['employed_pct']=round(employed.employ_n/employed.industry_total,2)
+
 # call the plotting funciton
-vp_line_plot(student_debt, 'year', 'race', 'loan_debt_pct', 'Average family student loan debt for aged 25-55, by race')
+vp_line_plot(employed, 'year', 'race_gender', 'employed_pct', 'title')
 
-######################## in-built line plot function ###########################
+employed.groupby[['year','industry']].mean()
 
-# Alternatively we could have used the inbuilt line plot with less customization
-import plotly.express as px
-fig = px.line(student_debt, x="year", y="loan_debt", color='race')
-fig.show()
+employed.groupby('industry').count()['year']
+employed[employed.industry=='Agriculture and related']\
+    [employed.race_gender=='Asian'].employ_n.sum()
+
+employed.groupby([['']])
 

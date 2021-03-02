@@ -58,7 +58,7 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     x_data = np.vstack((x_axis_labels,)*y_axis_levels) 
     y_data=[]
     for i in range(0, y_axis_levels):
-        y_data.append(df[df[y_axis_field]==y_axis_labels[i]].loan_debt_pct.values.tolist())
+        y_data.append(df[df[y_axis_field]==y_axis_labels[i]][value_field].values.tolist())
     y_data = np.array(y_data)
     # select colors to be used and line thickness of plot
     colors = ['firebrick','olive','dodgerblue','blueviolet','dimgrey','tomato','sienna','darkorange','forestgreen','steelblue','royalblue','orchid']
@@ -70,7 +70,7 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     # Add lines to plot
     for i in range(0, y_axis_levels):
         fig.add_trace(go.Scatter(x=x_data[i], y=y_data[i], mode='lines',
-            name=labels[i],
+            name=y_axis_labels[i],
             line=dict(color=colors[i], width=line_size[i]),
             connectgaps=True,
         ))
@@ -96,7 +96,7 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
     # Annotate
     annotations = []
     # Adding labels
-    for y_trace, label, color in zip(y_data, labels, colors):
+    for y_trace, label, color in zip(y_data, y_axis_labels, colors):
         # labeling the left_side of the plot
         annotations.append(dict(xref='paper', x=0.05, y=y_trace[0],
                                     xanchor='right', yanchor='middle',
@@ -104,9 +104,9 @@ def vp_line_plot(df, x_axis_field, y_axis_field, value_field, title_field):
                                     font=dict(family='Arial', size=12),
                                     showarrow=False))
         # labeling the right_side of the plot
-        annotations.append(dict(xref='paper', x=0.95, y=y_trace[9],
+        annotations.append(dict(xref='paper', x=0.95, y=y_trace[y_data[0].size-1],
                                     xanchor='left', yanchor='middle',
-                                    text='{}%'.format(y_trace[9]),
+                                    text='{}%'.format(y_trace[y_data[0].size-1]),
                                     font=dict(family='Arial', size=12),
                                     showarrow=False))
     # Footnote
