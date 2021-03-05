@@ -61,3 +61,40 @@ for r, c in zip(conjugal.Conjugal_Status.unique(), colors):
     )
 fig
 
+# dubois challenge 3
+# occupation
+
+import plotly.graph_objects as go
+
+labels = occupation.Category.tolist()
+labels = ['Negroes: Agriculture, Fisheries and Mining',
+ 'Negroes: Manufacturing and Mechanical Industries',
+ 'Negroes: Domestic and Personal Service',
+ 'Negroes: Professions',
+ 'Negroes: Trade and Transportation',
+ 'Blank: Right',
+ 'Whites: Agriculture, Fisheries and Mining',
+ 'Whites: Manufacturing and Mechanical Industries',
+ 'Whites: Domestic and Personal Service',
+ 'Whites: Professions',
+ 'Whites: Trade and Transportation',
+ 'Blank: Left']
+
+white_space=50 # this can be modified as needed
+values = occupation.Percentage.tolist()
+values = [62.0, 5.0, 28.0, 0.8, 4.5, white_space, 64.0, 12.5, 5.5, 4.0, 13.0, white_space]
+
+color_list = ['dimgray', 'firebrick', 'olive', 'saddlebrown', 'steelblue', 'white', 'dimgray', 'firebrick', 'olive', 'saddlebrown', 'steelblue', 'white']
+
+fig = go.Figure(data=[go.Pie(labels=None, values=values, 
+    direction='clockwise', 
+    rotation=(-((white_space/sum(values))*360)), 
+    sort=False, showlegend=False, 
+    title='Occupation by race')]) # , labels=labels, hole=0.4 to make a donut
+fig.update_traces(marker=dict(colors=color_list), textinfo='none') #, line=dict(color='#000000', width=2)))
+fig.show()
+
+
+
+
+
