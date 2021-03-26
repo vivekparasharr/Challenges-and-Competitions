@@ -9,6 +9,24 @@ issues = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytues
 # votes cast by issue
 issues.groupby('issue').nunique()['rcid']
 
+issues.sort_values(by='rcid')
+i2 = issues.pivot(index='rcid', columns='short_name').reset_index()
+
+t = i2
+t['all_issues'] = ''
+for c in ['co', 'di', 'ec', 'hr', 'me', 'nu']:
+    t['all_issues'] = t['all_issues'].map(str) \
+                    + t.issue[c].map(str).replace('nan','') 
+
+t.groupby('all_issues').nunique()[['rcid']]
+
+# Example of If condition in 1 line
+# "neg" if b < 0 else "pos" if b > 0 else "zero"
+',' if t.issue['co'].map(str) else ''
+
+
+pd.merge(left=unvotes, right=issues, left_on='rcid', right_on='rcid')
+
 u2 = unvotes.groupby(['country', 'vote']).count()['rcid'].reset_index()
 u3 = u2.pivot(index='country', columns='vote', values='rcid').reset_index()
 
@@ -24,8 +42,13 @@ def foo(ctry_nm):
         return 'NA'
 u3['continent'] = [ foo(x) for x in u3['country']]
 # summarize by continent
-u3.groupby(['continent']).sum()[['abstain', 'no', 'yes']].reset_index()
-u3.groupby(['continent']).count()['country'].reset_index()
+a = u3.groupby(['continent']).sum()[['abstain', 'no', 'yes']].reset_index()
+b = u3.groupby(['continent']).count()['country'].reset_index()
+
+u4 = pd.merge(left=a, right=b, left_on='continent', right_on='continent')
+u4['total_votes'] = u4.abstain + u4.no + u4.yes
+
+
 
 roll_calls.short.unique()
 
