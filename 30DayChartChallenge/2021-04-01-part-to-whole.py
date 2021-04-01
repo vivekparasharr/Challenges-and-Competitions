@@ -1,6 +1,6 @@
 
 import pandas as pd
-df = pd.read_csv('2021-04-01/netflix_titles.csv')
+df = pd.read_csv('Data/netflix_titles.csv')
 
 
 # EDA
