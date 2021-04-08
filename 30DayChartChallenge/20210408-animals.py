@@ -1,6 +1,42 @@
 
 import pandas as pd
-df = pd.read_csv('Data/netflix_titles.csv')
+df = pd.read_csv('Data/biodiverse-countries.csv')
+
+import plotly.graph_objects as go
+fig = go.Figure(data=go.Choropleth(
+    locationmode = "country names",
+    locations = list(df.Country.values), #['Brazil', 'India'],
+    z = list(df.Rank.values),
+    text = list(df.Rank.values),
+    autocolorscale=True,
+    reversescale=False,
+    colorbar_title='Biodiverse Rank',
+))
+# Title
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=1.22,xanchor='center',yanchor='top', 
+  font=dict(family='Arial',size=24,color='grey'),showarrow=False, 
+  text="Top 50 Most Biodiverse Countries"))
+# Subtitle
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=1.08,xanchor='center',yanchor='top',
+  font=dict(family='Arial',size=14,color='grey'),showarrow=False,
+  text="Europe Needs to Act!"))
+# Footer
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=0.05,xanchor='center',yanchor='top',
+  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
+  text='#30DayChartChallenge - animals - 2021/04/08'))
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=0,xanchor='center',yanchor='top',
+  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
+  text='Dataset from https://news.mongabay.com/2016/05/top-10-biodiverse-countries'))
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.08,xanchor='center',yanchor='top',
+  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
+  text='Ten Actions for a Biodiverse Europe'))
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.13,xanchor='center',yanchor='top',
+  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
+  text='https://www.foeeurope.org/sites/default/files/biodiversity/2016/ten_actions_for_a_biodiverse_europe_-_final.pdf'))
+fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.22,xanchor='center',yanchor='top',
+  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
+  text='twitter.com/vivekparasharr | github.com/vivekparasharr | vivekparasharr.medium.com'))
+fig.show()
 
 ###################### needs to be changed ##########################
 # EDA

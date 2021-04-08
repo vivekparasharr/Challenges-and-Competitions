@@ -2,8 +2,7 @@
 import pandas as pd
 df = pd.read_csv('Data/netflix_titles.csv')
 
-###################### needs to be changed ##########################
-# EDA
+###################### needs to be changed ########################## EDA
 def vp_summ(df):
     print('#columns:', df.shape[1]) # number of columns
     print('#rows:', df.shape[0]) # number of rows
