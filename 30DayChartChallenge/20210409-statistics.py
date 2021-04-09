@@ -25,6 +25,8 @@ fig = make_subplots(rows=3, cols=3, # shared_xaxes=True,
            [{"type": "xy"}, {"type": "xy"}, {"type": "xy"}]])
     #subplot_titles=("Plot 1", "Plot 2"))
 
+fig.update_layout(template="plotly_dark")
+
 fig.add_trace(go.Histogram(x=df_uniform, showlegend=False), 
               row=1, col=1,)
 fig.add_trace(go.Histogram(x=df_normal, showlegend=False), 
