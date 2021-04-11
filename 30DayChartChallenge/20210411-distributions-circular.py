@@ -1,62 +1,101 @@
 
+import numpy as np
 import pandas as pd
-df = pd.read_csv('Data/cod.csv')
+
+df = pd.read_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
+
+# prepare data for chile
+chl = df[df.iso_code=='CHL'].copy()
+chl.date = pd.to_datetime(chl.date)
+chl['year'] = chl.date.dt.year
+chl['dayofyear'] = chl.date.dt.dayofyear
+chl.reset_index(drop=True, inplace=True)
+chl2 = chl.iloc[47:].copy()
+chl2.reset_index(drop=True, inplace=True)
 
 
-forest = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/forest.csv')
-forest_area = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/forest_area.csv')
-brazil_loss = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/brazil_loss.csv')
-soybean_use = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/soybean_use.csv')
-vegetable_oil = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-06/vegetable_oil.csv')
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 80
+bottom = 8
+max_height = 4
+
+theta = np.linspace(0.0, 2 * np.pi, N, endpoint=False)
+radii = max_height*np.random.rand(N)
+width = (2*np.pi) / N
+
+ax = plt.subplot(111, polar=True)
+bars = ax.bar(theta, radii, width=width, bottom=bottom)
+
+# Use custom colors and opacity
+for r, bar in zip(radii, bars):
+    bar.set_facecolor(plt.cm.jet(r / 10.))
+    bar.set_alpha(0.8)
+
+plt.show()
 
 
-###################### needs to be changed ########################## EDA
-def vp_summ(df):
-    print('#columns:', df.shape[1]) # number of columns
-    print('#rows:', df.shape[0]) # number of rows
-    for r in df.columns:
-        print(r, ':', # column name
-        df[r].unique().shape[0], # number of unique elements in the column
-        '| example:', df[r][0]) # example of the first element in the column
-vp_summ(df)
+#####################################
+
+df2 = df[df.date==df.date.max()]
+not_countries=['OWID_AFR','OWID_ASI','OWID_EUR','OWID_EUN','OWID_INT','OWID_KOS','OWID_NAM','OWID_CYN','OWID_OCE','OWID_SAM','OWID_WRL']
+df2 = df2[~df2.iso_code.isin(not_countries)]
+
+sel_col=['location', 'total_cases_per_million', 'total_deaths_per_million', 
+'population_density','gdp_per_capita','extreme_poverty',
+'cardiovasc_death_rate','diabetes_prevalence','female_smokers',
+'male_smokers','handwashing_facilities','hospital_beds_per_thousand',
+'life_expectancy','human_development_index']
+df3 = df2[sel_col]
+df3.dropna(inplace=True)
+
+df3.info()
+df3.describe()
+
 
 import dataprep.eda as eda
-eda.plot(df) #,'country')
-eda.plot_correlation(df, 'numeric-column') 
-eda.plot_missing(df) #, 'country')
+eda.plot(df3) #,'country')
+eda.plot_correlation(df3) #, 'numeric-column') 
+eda.plot_missing(df3) #, 'country')
 
-# Summarizing
-df.groupby('country').nunique()[['show_id']].sort_values(by='show_id', ascending=False)
-df.groupby('country').nunique()[['show_id']].sum()
-7280-923
+# Log-transform the wages, because they typically are increased with
+# multiplicative factors
+# data['wage'] = np.log10(data['wage'])
 
-# Plotting
-import plotly.graph_objects as go
+# K-Means Clustering
+# Convert pd df to np ar
+X = df3.iloc[:, 1:].values
 
-labels = ['All other movies','Indian movies']
-values = [6357, 923]
+# Using the elbow method to find the optimal number of clusters
+from sklearn.cluster import KMeans
+wcss = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters = i, init = 'k-means++', random_state = 42)
+    kmeans.fit(X)
+    wcss.append(kmeans.inertia_)
 
-# pull is given as a fraction of the pie radius
-fig = go.Figure(data=[go.Pie(labels=labels, values=values, rotation=90, pull=[0, 0.2])])
-# Title
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=1.22,xanchor='center',yanchor='top', 
-  font=dict(family='Arial',size=24,color='grey'),showarrow=False, 
-  text="Share of Indian movies on Netflix"))
-# Subtitle
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=1.07,xanchor='center',yanchor='top',
-  font=dict(family='Arial',size=14,color='grey'),showarrow=False,
-  text="Netflix Movies and TV Shows Dataset"))
-# Footer
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0,xanchor='center',yanchor='top',
-  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
-  text='#30DayChartChallenge - part-to-whole - 2021/04/01'))
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.06,xanchor='center',yanchor='top',
-  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
-  text='Dataset from Kaggle: https://www.kaggle.com/shivamb/netflix-shows'))
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.15,xanchor='center',yanchor='top',
-  font=dict(family='Arial', size=12, color='grey'),showarrow=False,
-  text='twitter.com/vivekparasharr | github.com/vivekparasharr'))
+# visualize elbow method output
+import plotly.express as px
+fig = px.line(x=list(range(1, 11)), y=wcss, 
+          labels={'x':'Number of clusters', 'y':'Within Cluster Sum of Squares (WCSS)'},
+          title='The Elbow Method')
 fig.show()
+
+# Training the K-Means model on the dataset
+kmeans = KMeans(n_clusters = 5, init = 'k-means++', random_state = 42)
+y_kmeans = kmeans.fit_predict(X)
+y_kmeans.shape
+
+# Visualising the clusters
+import plotly.graph_objects as go
+fig = go.Figure()
+for i in range(0, n_clusters):
+  fig.add_trace(go.Scatter(x=X[y_kmeans == i, 0], y=X[y_kmeans == i, 1],
+                    mode='markers', #'lines+markers'
+                    name='markers'))
+fig.show()
+
 
 ########################## k means #######################
 
