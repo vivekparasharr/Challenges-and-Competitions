@@ -8,24 +8,39 @@ df = pd.read_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
 chl = df[df.iso_code=='CHL'].copy()
 chl.date = pd.to_datetime(chl.date)
 chl['year'] = chl.date.dt.year
-chl['dayofyear'] = chl.date.dt.dayofyear
-chl.reset_index(drop=True, inplace=True)
-chl2 = chl.iloc[47:].copy()
-chl2.reset_index(drop=True, inplace=True)
+#chl['dayofyear'] = chl.date.dt.dayofyear
+#chl['dayofweek'] = chl.date.dt.dayofweek
+chl['week'] = chl.date.dt.week
+#chl.reset_index(drop=True, inplace=True)
+#chl2 = chl.iloc[47:].copy()
+#chl3 = chl[chl.dayofweek==5].copy()
+#chl3.reset_index(drop=True, inplace=True)
+#chl.groupby(['year','week']).mean()[['new_cases']]
+
+chl.new_cases.max() # this is 13990 , i.e. 14000.. 
+# we need to divide 14000 by 3500 to get 4.. 
+# which is the max_height for our chart..
+# so we divide all new_cases by 3500 to get proportional value
 
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-N = 80
+N = 413 #80
 bottom = 8
-max_height = 4
+max_height = 8 #4
 
 theta = np.linspace(0.0, 2 * np.pi, N, endpoint=False)
-radii = max_height*np.random.rand(N)
+radii = (chl.new_cases/1750).to_list() #max_height*np.random.rand(N)
 width = (2*np.pi) / N
 
-ax = plt.subplot(111, polar=True)
+cm = 1/2.54  # centimeters in inches
+fig = plt.figure(figsize=(20*cm, 20*cm))
+fig.suptitle('Daily Coronavirus Cases in Chile (2020-02-23 to 2021-04-10)', fontsize=22, color='royalblue')
+fig.text(0.00, 0.04, '#30DayChartChallenge - circular - 2021/04/11', style = 'italic', fontsize = 14, color = "royalblue") 
+fig.text(0.00, 0.01, 'https://twitter.com/vivekparasharr | github.com/vivekparasharr | vivekparasharr.medium.com', style = 'italic', fontsize = 14, color = "royalblue") 
+ax = fig.add_subplot(111, polar=True)
+#ax.grid(False)
 bars = ax.bar(theta, radii, width=width, bottom=bottom)
 
 # Use custom colors and opacity
@@ -35,8 +50,11 @@ for r, bar in zip(radii, bars):
 
 plt.show()
 
+plt.savefig('Data/chl_covid_cases.png')
 
-#####################################
+
+#####################################################################
+####################### unused code -- attempted to do k-means clustering
 
 df2 = df[df.date==df.date.max()]
 not_countries=['OWID_AFR','OWID_ASI','OWID_EUR','OWID_EUN','OWID_INT','OWID_KOS','OWID_NAM','OWID_CYN','OWID_OCE','OWID_SAM','OWID_WRL']
