@@ -1,48 +1,143 @@
 
-import pandas as pd
-df = pd.read_csv('Data/share-deaths-from-natural-disasters.csv')
-df.columns = ['Entity', 'Code', 'Year', 'Deaths'] #Deaths - Exposure to forces of nature - Sex: Both - Age: All Ages (Percent)
+# https://www.kdnuggets.com/2019/05/animations-with-matplotlib.html
 
-#select_countries = list(df.groupby('Entity').mean()[['Deaths']].reset_index().sort_values(by='Deaths', ascending=False).head(10).Entity)
-select_countries = ['Afghanistan',  'Australia', 
-     'Brazil', 'Canada', 'Chile', 'China', 'Egypt', 'England', 
-       'Finland', 'France', 'Germany',  'India',
-       'Indonesia', 'Italy',
-       'Japan', 'Malaysia', 'Mexico', 
-       'New Zealand',  'Peru', 'Poland',
-       'Portugal',  'Russia',  'Saudi Arabia', 'South Africa',
-        'Spain', 'Sri Lanka',
-        'United Kingdom', 'United States']
+# Animations using Celluloid Module
+from matplotlib import pyplot as plt
+from celluloid import Camera
+fig = plt.figure()
+camera = Camera(fig)
+for i in range(10):
+    plt.plot([i] * 10)
+    camera.snap()
+animation = camera.animate()
+animation.save('celluloid_minimal.gif', writer = 'imagemagick')
 
-df2 = df[df.Entity.isin(select_countries)].reset_index(drop=True)
-df3 = df2.pivot(index='Year', columns='Entity', values='Deaths').reset_index()
 
-import plotly.graph_objects as go
-fig = go.Figure(data=go.Heatmap(
-        z=np.log(df3.iloc[:, 1:].to_numpy()), 
-        x=df3.iloc[:,0].to_numpy(), 
-        y=select_countries, 
-        colorscale='Viridis'))
-fig.update_layout(xaxis_nticks=36)
+########################################################################
 
-# Title
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=1.25,xanchor='center',yanchor='top', 
-font=dict(family='Arial',size=22,color='grey'),showarrow=False, 
-text='Military expenditure (pct of GDP), 1960 to 2017'))
-# Subtitle
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=1.12,xanchor='center',yanchor='top',
-font=dict(family='Arial',size=14,color='grey'),showarrow=False,
-text='Includes military and civil personnel; operation and maintenance; procurement; military R&D; and military aid'))
-# Footer
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.14,xanchor='center',yanchor='top',
-font=dict(family='Arial', size=12, color='grey'),showarrow=False,
-text='#30DayChartChallenge - downward - 2021/04/21'))
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.17,xanchor='center',yanchor='top',
-font=dict(family='Arial', size=12, color='grey'),showarrow=False,
-text='Data from OWID'))
-fig.add_annotation(dict(xref='paper',yref='paper',x=0.5,y=-0.22,xanchor='center',yanchor='top',
-font=dict(family='Arial', size=12, color='grey'),showarrow=False,
-text='twitter.com/vivekparasharr | github.com/vivekparasharr | vivekparasharr.medium.com'))
-fig.show()
+
+# Subplots
+import numpy as np
+from matplotlib import pyplot as plt
+from celluloid import Camera
+fig, axes = plt.subplots(2)
+camera = Camera(fig)
+t = np.linspace(0, 2 * np.pi, 128, endpoint=False)
+for i in t:
+    axes[0].plot(t, np.sin(t + i), color='blue')
+    axes[1].plot(t, np.sin(t - i), color='blue')
+    camera.snap()
+animation = camera.animate()  
+animation.save('celluloid_subplots.gif', writer = 'imagemagick')
+
+
+########################################################################
+
+
+# Legends
+import matplotlib
+from matplotlib import pyplot as plt
+from celluloid import Camera
+fig = plt.figure()
+camera = Camera(fig)
+for i in range(20):
+    t = plt.plot(range(i, i + 5))
+    plt.legend(t, [f'line {i}'])
+    camera.snap()
+animation = camera.animate()
+animation.save('celluloid_legends.gif', writer = 'imagemagick')
+
+
+########################################################################
+
+
+# Basic Animation: Moving Sine Wave 
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.animation import FuncAnimation
+plt.style.use('seaborn-pastel')
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 4), ylim=(-2, 2))
+line, = ax.plot([], [], lw=3)
+def init():
+    line.set_data([], [])
+    return line,
+def animate(i):
+    x = np.linspace(0, 4, 1000)
+    y = np.sin(2 * np.pi * (x - 0.01 * i))
+    line.set_data(x, y)
+    return line,
+anim = FuncAnimation(fig, animate, init_func=init,
+                               frames=200, interval=20, blit=True)
+anim.save('sine_wave.gif', writer='imagemagick')
+
+
+########################################################################
+
+
+# A Growing Coil
+import matplotlib.pyplot as plt 
+import matplotlib.animation as animation 
+import numpy as np 
+plt.style.use('dark_background')
+fig = plt.figure() 
+ax = plt.axes(xlim=(-50, 50), ylim=(-50, 50)) 
+line, = ax.plot([], [], lw=2) 
+# initialization function 
+def init(): 
+	# creating an empty plot/frame 
+	line.set_data([], []) 
+	return line, 
+# lists to store x and y axis points 
+xdata, ydata = [], [] 
+# animation function 
+def animate(i): 
+	# t is a parameter 
+	t = 0.1*i 
+	# x, y values to be plotted 
+	x = t*np.sin(t) 
+	y = t*np.cos(t) 
+	# appending new points to x, y axes points list 
+	xdata.append(x) 
+	ydata.append(y) 
+	line.set_data(xdata, ydata) 
+	return line, 
+# setting a title for the plot 
+plt.title('Creating a growing coil with matplotlib!') 
+# hiding the axis details 
+plt.axis('off') 
+# call the animator	 
+anim = animation.FuncAnimation(fig, animate, init_func=init, 
+							frames=500, interval=20, blit=True) 
+# save the animation as mp4 video file 
+anim.save('coil.gif',writer='imagemagick')
+
+
+########################################################################
+
+
+# Live Updating Graphs
+#importing libraries
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+fig = plt.figure()
+#creating a subplot 
+ax1 = fig.add_subplot(1,1,1)
+def animate(i):
+    data = open('stock.txt','r').read()
+    lines = data.split('\n')
+    xs = []
+    ys = []
+    for line in lines:
+        x, y = line.split(',') # Delimiter is comma    
+        xs.append(float(x))
+        ys.append(float(y))
+    ax1.clear()
+    ax1.plot(xs, ys)
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.title('Live graph with matplotlib')	
+ani = animation.FuncAnimation(fig, animate, interval=1000) 
+plt.show()
 
 
