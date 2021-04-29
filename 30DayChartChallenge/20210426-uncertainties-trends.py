@@ -15,6 +15,23 @@ df2.columns = ['Entity', 'Code', 'Year',
        'Daily'] # Daily smoking prevalence - both (IHME, GHDx (2012))
 
 
+
+## Plotted using seaborn
+import seaborn as sns
+ax = sns.regplot(x=df2[df2.Code=='CHL'][df2.Year<=2002].Daily.values, 
+      y=df[df.Code=='CHL'][df.Year>=1980].Total.values, )
+ax.set(title='Chile: Daily Smoker Prevalence vs Lung Cancer Deaths (1980-2002)', 
+      xlabel='daily smokers (% of total populaiton)', ylabel='lung cancer deaths (per 100,000)')
+ax.set(xlim=(32.8, 37.8),) # ylim=(0, 10))
+ax.annotate(text='Each dot is representative of a year', xy=(33.05, 25.2), xycoords='data')
+ax.annotate(text='#30DayChartChallenge - 2021/04/26 | trends', xy=(33.05, 24.8), xycoords='data')
+ax.annotate(text='twitter.com/vivekparasharr', xy=(33.05, 24.6), xycoords='data')
+ax.figure.savefig("Charts/2021-04-26.png")
+
+
+
+### UNUSED CODE
+
 ################################################################################
 
 import numpy as np
@@ -131,18 +148,6 @@ fig.show()
 
 
 ################################################################################
-
-## Plotted using seaborn
-import seaborn as sns
-ax = sns.regplot(x=df2[df2.Code=='CHL'][df2.Year<=2002].Daily.values, 
-      y=df[df.Code=='CHL'][df.Year>=1980].Total.values, )
-ax.set(title='Chile: Daily Smoker Prevalence vs Lung Cancer Deaths (1980-2002)', 
-      xlabel='daily smokers (% of total populaiton)', ylabel='lung cancer deaths (per 100,000)')
-ax.set(xlim=(32.8, 37.8),) # ylim=(0, 10))
-ax.annotate(text='Each dot is representative of a year', xy=(33.05, 25.2), xycoords='data')
-ax.annotate(text='#30DayChartChallenge - 2021/04/26 | trends', xy=(33.05, 24.8), xycoords='data')
-ax.annotate(text='twitter.com/vivekparasharr', xy=(33.05, 24.6), xycoords='data')
-ax.figure.savefig("Charts/2021-04-26.png")
 
 
 # Plotted using plotly express
