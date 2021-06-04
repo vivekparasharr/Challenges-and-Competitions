@@ -29,3 +29,4 @@ ax.set(title='Netflix: how many old titles added?',
       xlabel='Year added', ylabel='Year released',
     )
 ax.figure.savefig("Data/2021-04-20.png")
+
