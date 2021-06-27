@@ -6,8 +6,11 @@ import pandas as pd
 water = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-04/water.csv')
 
 
-from dataprep.eda import create_report
-df = load_dataset("titanic")
-create_report(df).show_browser()
+import dataprep.eda as eda
+eda.create_report(water).show_browser()
 
+eda.plot(water, 'water_source')
+eda.plot(water, 'water_source', 'water_tech').show_browser()
+
+eda.plot(water, 'water_source', 'country_name').show_browser()
 
