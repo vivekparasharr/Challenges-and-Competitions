@@ -4,11 +4,13 @@ import pandas as pd
 from matplotlib.pyplot import xticks
 import dataprep.eda as eda
 
-survey = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
+records = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-25/records.csv')
+drivers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-25/drivers.csv')
+
 
 broadband.columns=['ST', 'COUNTY_ID', 'COUNTY_NAME', 'AVAILABILITY', 'USAGE']
 
-eda.create_report(survey).show_browser()
+eda.create_report(records).show_browser()
 
 eda.plot(survey[survey.annual_salary<1000000], 'annual_salary', 'industry').show_browser()
 eda.plot(survey[survey.annual_salary<500000], 'annual_salary', 'industry').show_browser()
