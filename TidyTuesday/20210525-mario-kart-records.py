@@ -11,11 +11,15 @@ drivers = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytue
 - separate 'type' of record
 - 16 tracks
 - records start from 1996/97
+ 
+- 
+
 
 df=records[records.track == 'Luigi Raceway']
 df['year']=pd.DatetimeIndex(pd.to_datetime(df.date)).year
-df.groupby(['track','type','shortcut','year']).mean()['time']
-records.info()
+df.groupby(['track','type','shortcut','year']).mean()['time'].head(200)
+
+df[df.type=='Single Lap']
 
 records.system_played.unique()
 
