@@ -26,7 +26,7 @@ records.system_played.unique()
 
 
 records.groupby('track').count()[['player']].sort_values(by='player', ascending=False).head(10)
-
+ 
 df = records.groupby('track').count()[['player']].sort_values(by='player', ascending=False).head(10)
 df.plot(kind='bar')
 
