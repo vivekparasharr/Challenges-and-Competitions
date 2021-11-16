@@ -15,6 +15,8 @@ def vp_summ(df):
 fishing = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
 stocked = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/stocked.csv')
 
+fishing.to_csv(r'\Users\vivekparashar\Downloads\fishing.csv', index = False)
+
 # analysis
 vp_summ(fishing)
 '''
