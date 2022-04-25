@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ESRI_ItemInformation Culture='en-US'>
+<name>Volcanoes of the World 93 from Shapefiles</name>
+<guid>2C168F9F-C818-4071-9507-06C8359B1063</guid>
+<catalogpath></catalogpath>
+<snippet></snippet>
+<description>Volcanoes, major cities, countries, and 30 degree grid for the world</description>
+<summary>Volcanoes of the World 9.3 from Shapefiles</summary>
+<title>All Layers</title>
+<tags>volcanoes cities Iceland volcano study</tags>
+<type>Layer Package</type>
+<typekeywords>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Layer Package</typekeyword>
+<typekeyword>Data</typekeyword>
+<typekeyword>ArcMap</typekeyword>
+<typekeyword>.lpk</typekeyword>
+</typekeywords>
+<thumbnail>thumbnail/thumbnail.png</thumbnail>
+<documentation></documentation>
+<url></url>
+<datalastmodifiedtime></datalastmodifiedtime>
+<extent>
+<xmin>-180.000000000079</xmin>
+<ymin>-90</ymin>
+<xmax>180</xmax>
+<ymax>89.9999999996609</ymax>
+</extent>
+<spatialreference>GCS_WGS_1984</spatialreference>
+<accessinformation>USGS, Esri</accessinformation>
+</ESRI_ItemInformation>
