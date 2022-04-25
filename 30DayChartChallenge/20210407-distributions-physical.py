@@ -1,6 +1,13 @@
 
 import pandas as pd
-df = pd.read_csv('Data/himalayan-peaks.csv')
+# df = pd.read_csv('Data/himalayan-peaks.csv')
+
+# Alternative way of getting data
+import sqlite3
+con = sqlite3.connect(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\30daychartchallenge-data.sqlite3')
+df = pd.read_sql_query("SELECT * from 'himalayan-peaks'", con)
+
+
 
 df.columns = ['PeakID', 'Height', 'PeakName', 'Region', 'Open', 'Status']
 df.Height = df.Height.str.replace('m', '')

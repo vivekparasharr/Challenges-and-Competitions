@@ -1,7 +1,6 @@
 
 import pandas as pd
-df = pd.read_csv('Data/netflix_titles.csv')
-
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\netflix_titles.csv')
 
 # EDA
 def vp_summ(df):

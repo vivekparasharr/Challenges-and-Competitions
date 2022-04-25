@@ -1,7 +1,7 @@
 
 import numpy as np
 import pandas as pd
-df = pd.read_csv('Data/world_population_and_projection.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\world_population_and_projection.csv')
 df = df[df.Year>=2000]
 for c in df.columns.to_list()[1:]:
   df[c] = df[c].str.replace(' ','')

@@ -2,11 +2,8 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('Data/annual-working-hours-per-worker.csv')
-book = pd.read_csv("Data/harrypotter/Book 1 - The Philosopher's Stone.txt")
-
 # read text file into a list
-with open("Data/harrypotter/Book 1 - The Philosopher's Stone.txt") as f:
+with open(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\HarryPotterandThePhilosophersStone.txt') as f:
     book = f.readlines()
 
 # convert list to dataframe

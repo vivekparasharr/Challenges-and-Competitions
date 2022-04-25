@@ -7,12 +7,12 @@ import geopandas as gpd
 from shapely.geometry import Point, Polygon
 
 # Import map of India
-map_india=gpd.read_file('/Users/vivekparashar/Documents/Code/Challenges-and-Competitions/30DayMapChallenge/Shapefiles/India-states/Indian_States.shp')
+map_india=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\india\states\Indian_States.shp')
 map_india=map_india.to_crs(crs='epsg:4326')
 map_india.head()
 
 # Import map of Rivers
-map=gpd.read_file('/Users/vivekparashar/Documents/Code/Challenges-and-Competitions/30DayMapChallenge/Shapefiles/India-water/IND_water_lines_dcw.shp')
+map_india=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\india\water\IND_water_lines_dcw.shp')
 map=map.to_crs(crs='epsg:4326')
 map.crs
 map.head()

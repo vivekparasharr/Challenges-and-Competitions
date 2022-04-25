@@ -2,7 +2,14 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('Data/annual-working-hours-per-worker.csv')
+# df = pd.read_csv('Data/annual-working-hours-per-worker.csv')
+
+
+# Alternative way of getting data
+import sqlite3
+con = sqlite3.connect(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\30daychartchallenge-data.sqlite3')
+df = pd.read_sql_query("SELECT * from 'annual-working-hours-per-worker'", con)
+
 
 # Preparing data
 df2 = df.loc[df.Entity.isin(['China', 'India', 'United States', 'Brazil', 'Germany'])]

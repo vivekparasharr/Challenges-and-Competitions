@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # Prepare data
-df = pd.read_csv('Data/public-expenditure-on-healthcare-as-share-of-national-gdp.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\public-expenditure-on-healthcare-as-share-of-national-gdp.csv')
 
 df.Entity.unique()
 

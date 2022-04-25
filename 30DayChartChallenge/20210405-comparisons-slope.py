@@ -3,7 +3,10 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 
-energy = pd.read_csv('Data/per-capita-energy-use.csv')
+import sqlite3
+con = sqlite3.connect(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\30daychartchallenge-data.sqlite3')
+df = pd.read_sql_query("SELECT * from 'per-capita-energy-use'", con)
+
 
 # prepare data
 energy = energy[energy.Entity.isin(['United Kingdom', 'United States', \

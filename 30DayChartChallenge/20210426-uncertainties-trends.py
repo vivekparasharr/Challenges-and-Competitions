@@ -4,7 +4,7 @@ from altair.vegalite.v4.schema.channels import XError2
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('Data/lung-cancer-deaths-per-100000-by-sex-1950-2002.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\lung-cancer-deaths-per-100000-by-sex-1950-2002.csv')
 df.columns = ['Entity', 'Code', 'Year',
        'Female', # Female lung cancer deaths (per 100,000) (WHO (IARC) (2016))
        'Male']

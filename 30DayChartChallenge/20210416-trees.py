@@ -7,7 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 
 # https://www.kaggle.com/uciml/mushroom-classification
-df=pd.read_csv('Data/mushrooms.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\mushrooms.csv')
 
 # Encoding a categorical variable
 # Option - convert a column to a category, then use those category values for your label encoding

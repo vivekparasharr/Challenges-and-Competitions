@@ -6,14 +6,14 @@ import geopandas as gpd
 from shapely.geometry import Point, Polygon
 
 
-map=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/India-states/Indian_States.shp')
+map_india=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\india\states\Indian_States.shp')
 fig, ax = plt.subplots(figsize=(15,15))
 #map.plot(ax=ax)
 map=map.to_crs(crs='epsg:4326')
 map.crs
 
 # import data
-df=pd.read_csv('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Data/India-cities-population.csv')
+df=pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\india\India-cities-population.csv')
 # convert lat, lon to geography (point)
 points=df.apply(lambda row: Point(row.lng, row.lat), axis=1)
 # create a new gpd.df from existing pd.df and geography

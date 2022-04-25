@@ -1,7 +1,7 @@
 
 import pandas as pd
 import numpy as np
-df = pd.read_csv('Data/share-deaths-from-natural-disasters.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\share-deaths-from-natural-disasters.csv')
 df.columns = ['Entity', 'Code', 'Year', 'Deaths'] #Deaths - Exposure to forces of nature - Sex: Both - Age: All Ages (Percent)
 
 #select_countries = list(df.groupby('Entity').mean()[['Deaths']].reset_index().sort_values(by='Deaths', ascending=False).head(10).Entity)

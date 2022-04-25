@@ -1,6 +1,6 @@
 
 import pandas as pd
-df = pd.read_csv('Data/biodiverse-countries.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\biodiverse-countries.csv')
 
 import plotly.graph_objects as go
 fig = go.Figure(data=go.Choropleth(

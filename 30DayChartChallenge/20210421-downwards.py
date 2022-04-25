@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # Prepare data
-df = pd.read_csv('Data/military-expenditure-share-gdp-sipri.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\military-expenditure-share-gdp-sipri.csv')
 
 df.Entity.unique()
 

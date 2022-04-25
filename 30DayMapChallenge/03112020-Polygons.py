@@ -7,27 +7,27 @@ import geopandas as gpd
 from shapely.geometry import Point, Polygon
 
 # Import map of Canada
-greatlakes_subbasins=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/greatlakes_subbasins/greatlakes_subbasins.shp')
+greatlakes_subbasins=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\greatlakes_subbasins\greatlakes_subbasins.shp')
 greatlakes_subbasins=greatlakes_subbasins.to_crs(crs='epsg:4326')
 # sub_basins.plot()
 # map_can.head()
 
-hydro_p_LakeSuperior=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/hydro_p_LakeSuperior/hydro_p_LakeSuperior.shp')
+hydro_p_LakeSuperior=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\hydro_p_LakeSuperior\hydro_p_LakeSuperior.shp')
 hydro_p_LakeSuperior=hydro_p_LakeSuperior.to_crs(crs='epsg:4326')
 
-hydro_p_LakeStClair=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/hydro_p_LakeStClair/hydro_p_LakeStClair.shp')
+hydro_p_LakeStClair=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\hydro_p_LakeStClair\hydro_p_LakeStClair.shp')
 hydro_p_LakeStClair=hydro_p_LakeStClair.to_crs(crs='epsg:4326')
 
-hydro_p_LakeOntario=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/hydro_p_LakeOntario/hydro_p_LakeOntario.shp')
+hydro_p_LakeOntario=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\hydro_p_LakeOntario\hydro_p_LakeOntario.shp')
 hydro_p_LakeOntario=hydro_p_LakeOntario.to_crs(crs='epsg:4326')
 
-hydro_p_LakeMichigan=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/hydro_p_LakeMichigan/hydro_p_LakeMichigan.shp')
+hydro_p_LakeMichigan=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\hydro_p_LakeMichigan\hydro_p_LakeMichigan.shp')
 hydro_p_LakeMichigan=hydro_p_LakeMichigan.to_crs(crs='epsg:4326')
 
-hydro_p_LakeHuron=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/hydro_p_LakeHuron/hydro_p_LakeHuron.shp')
+hydro_p_LakeHuron=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\hydro_p_LakeHuron\hydro_p_LakeHuron.shp')
 hydro_p_LakeHuron=hydro_p_LakeHuron.to_crs(crs='epsg:4326')
 
-hydro_p_LakeErie=gpd.read_file('/Users/vivekparashar/Documents/GitHub/30DayMapChallenge/Maps/Great-lakes/hydro_p_LakeErie/hydro_p_LakeErie.shp')
+hydro_p_LakeErie=gpd.read_file(r'C:\Users\vivek\Documents\Code\local-items\30daymapchallenge-data\Great-lakes\hydro_p_LakeErie\hydro_p_LakeErie.shp')
 hydro_p_LakeErie=hydro_p_LakeErie.to_crs(crs='epsg:4326')
 
 # Function for annotating the chart

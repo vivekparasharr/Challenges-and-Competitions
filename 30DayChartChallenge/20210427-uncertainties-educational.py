@@ -10,7 +10,7 @@ Multiple Scenarios
 
 import numpy as np
 import pandas as pd
-df = pd.read_csv('Data/wcde_data_education.csv')
+df = pd.read_csv(r'C:\Users\vivek\Documents\Code\local-items\30daychartchallenge-data\wcde_data_education.csv')
 
 df.Scenario.unique() 
 Scenario_levels = ['SSP2', 'SSP1', 'SSP3'] # SSP1 - Rapid Development, SSP2 - Medium, SSP3 - Stalled Development
